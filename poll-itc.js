@@ -23,9 +23,9 @@ function checkAppStatus() {
 
       versions.forEach(version => {
         // use the live version if edit version is unavailable
-        var currentAppInfo = version['editVersion']
-          ? version['editVersion']
-          : version['liveVersion'];
+        var currentAppInfo = version['edit_version']
+          ? version['edit_version']
+          : version['live_version'];
         var lastAppInfo = db.get(`app-info-${currentAppInfo.appId}`);
 
         if (
