@@ -1,0 +1,27 @@
+{
+  "name": "itunes-connect-slack",
+  "version": "1.0.0",
+  "description": "itunes-connect-slack",
+  "main": "poll-itc.js",
+  "dependencies": {
+    "@slack/client": "^4.6.0",
+    "dirty": "^1.1.0",
+    "dotenv": "^6.0.0",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hungnm2904/itunes-connect-slack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hungnm2904/itunes-connect-slack/issues"
+  },
+  "homepage": "https://github.com/hungnm2904/itunes-connect-slack#readme"
+}
