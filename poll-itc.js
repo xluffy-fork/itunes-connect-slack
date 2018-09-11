@@ -1,20 +1,20 @@
-require("dotenv").config();
-const poster = require("./post-update.js");
-const dirty = require("dirty");
-const db = dirty(process.env.DB_NAME || "kvstore.db");
+require('dotenv').config();
+const poster = require('./post-update.js');
+const dirty = require('dirty');
+const db = dirty(process.env.DB_NAME || 'kvstore.db');
 const pollIntervalSeconds = process.env.POLL_INTERVAL_SECONDS || 120;
 
 function checkAppStatus() {
-  console.log("Fetching latest app status...");
+  console.log('Fetching latest app status...');
 
   // invoke ruby script to grab latest app status
-  var exec = require("child_process").exec;
-  exec("ruby get-app-status.rb", function(err, stdout, stderr) {
+  var exec = require('child_process').exec;
+  exec('ruby get-app-status.rb', function(err, stdout, stderr) {
     if (stderr) {
       return console.error(stderr);
     }
     if (err) {
-      return console.error(error);
+      return console.error(err);
     }
     if (stdout) {
       // compare new app info with last one (from database)
@@ -23,9 +23,9 @@ function checkAppStatus() {
 
       versions.forEach(version => {
         // use the live version if edit version is unavailable
-        var currentAppInfo = version["editVersion"]
-          ? version["editVersion"]
-          : version["liveVersion"];
+        var currentAppInfo = version['editVersion']
+          ? version['editVersion']
+          : version['liveVersion'];
         var lastAppInfo = db.get(`app-info-${currentAppInfo.appId}`);
 
         if (
@@ -35,7 +35,7 @@ function checkAppStatus() {
           poster.slack(currentAppInfo, db.get(`submission-start-${currentAppInfo.appId}`));
 
           // store submission start time
-          if (currentAppInfo.status == "Waiting For Review") {
+          if (currentAppInfo.status == 'Waiting For Review') {
             db.set(`submission-start-${currentAppInfo.appId}`, new Date());
           }
         } else if (currentAppInfo) {
@@ -52,7 +52,7 @@ function checkAppStatus() {
         db.set(`app-info-${currentAppInfo.appId}`, currentAppInfo);
       });
     } else {
-      console.error(`There was a problem fetching the status of "${currentAppInfo.name}"!`);
+      console.error('There was a problem fetching app status!');
     }
   });
 }
